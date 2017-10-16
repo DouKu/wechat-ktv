@@ -10,6 +10,7 @@
     <div class="btn" @click="translateVoice">识别语音</div>
     <div class="btn" @click="uploadVoice">上传</div>
     <div class="btn" @click="changeRouter('/video')">观看视频</div>
+    <div class="btn" @click="changeRouter('/person')">用户主页</div>
   </div>
 </template>
 
