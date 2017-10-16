@@ -56,7 +56,27 @@ const uploadToQiniu = (dir, fileName) => {
   })
 }
 
+/**
+ * 从七牛云上下载文件
+ * @param {String} fileName 七牛云上的文件名：全名，test.txt
+ */
+const downloadFromQiniu = fileName => {
+  return new Promise((resolve, reject) => {
+    try {
+      let config = new qiniu.conf.Config()
+      let bucketManager = new qiniu.rs.BucketManager(mac, config)
+      let publicBucketDomain = 'http://os32fgzvj.bkt.clouddn.com'
+      let key = fileName
+      let publicDownloadUrl = bucketManager.publicDownloadUrl(publicBucketDomain, key)
+      return resolve(publicDownloadUrl)
+    } catch (err) {
+      return reject(err)
+    }
+  })
+}
+
 export {
   getUptoken,
-  uploadToQiniu
+  uploadToQiniu,
+  downloadFromQiniu
 }

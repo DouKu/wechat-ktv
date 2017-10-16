@@ -16,6 +16,7 @@ const UserSchema = new Schema({
   access_token: String,
   refresh_token: String,
   createAt: { type: Date, default: Date.now }
+  
 })
 
 export default mongoose.model('Users', UserSchema)
