@@ -17,7 +17,7 @@ const ChorusSchema = new Schema({
 	extendMessage: [{
 		point: Number,            // 各自得分
 	}],  // 额外信息
-	sumPoint: Number,         // 总得分
+	sumPoint: Number,         // 总得分 
   createAt: { type: Date, default: Date.now },
   updateAt: { type: Date, default: Date.now }
 })
