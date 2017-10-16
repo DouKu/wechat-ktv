@@ -9,6 +9,7 @@
     <div class="btn" @click="stopVoice">停止播放</div>
     <div class="btn" @click="translateVoice">识别语音</div>
     <div class="btn" @click="uploadVoice">上传</div>
+    <div class="btn" @click="changeRouter('/video')">观看视频</div>
   </div>
 </template>
 
@@ -27,6 +28,9 @@ export default {
     }
   },
   methods: {
+    changeRouter (path) {
+      this.$router.push(path)
+    },
     translateVoice () {
       wx.translateVoice({
         localId: this.localId, // 需要识别的音频的本地Id，由录音相关接口获得
