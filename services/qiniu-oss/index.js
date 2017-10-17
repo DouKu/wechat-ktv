@@ -75,8 +75,36 @@ const downloadFromQiniu = fileName => {
   })
 }
 
+/**
+ * 检测文件
+ * @param {string} fileName 
+ */
+const checkfile = fileName => {
+	return new Promise((resolve, reject) => {
+		try {
+			let config = new qiniu.conf.Config()
+			let bucketManager = new qiniu.rs.BucketManager(mac, config)
+			let key = fileName
+			bucketManager.stat(nconf.get('qiniu').Bucket_Name, key, (err, respBody, respInfo) => {
+				if (err) {
+					return reject(err)
+				} else {
+					if (respInfo.statusCode === 200) {
+						return resolve(true)
+					} else {
+						return resolve(false)
+					}
+				}
+			})
+		} catch (err) {
+			return reject(err)
+		}
+	})
+}
+
 export {
   getUptoken,
   uploadToQiniu,
-  downloadFromQiniu
+	downloadFromQiniu,
+	checkfile
 }

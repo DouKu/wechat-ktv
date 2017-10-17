@@ -1,4 +1,5 @@
 import { findAudio } from '../services/core/audio-service'
+import { checkfile } from '../services/qiniu-oss/index'
 
 const getAllXinMusic = async (req, res, next) => {
 	try {
@@ -11,15 +12,15 @@ const getAllXinMusic = async (req, res, next) => {
 
 const addXinMusic = async (req, res, next) => {
 	try {
-		// TODO 检查七牛云是否有对应的文件,有才保存 
+		// TODO 检查七牛云是否有对应的文件,有才保存
+		await checkfile(req.fileName)
 		res.json({ code: 200 })
 	} catch (err) {
 		res.json({ code: 400, msg: err.message })
 	}
 }
 
-
-
 export {
-	getAllXinMusic
+	getAllXinMusic,
+	addXinMusic
 }
