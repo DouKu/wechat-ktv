@@ -16,11 +16,10 @@ const postChrous = async (req, res, next) => {
   try {
     // 获取微信的音频
     const mp3 = await getMedia(mediaId)
-    const path = mp3.path
     const name = mp3.name
     const audio = await findOneAudio({ _id:  audioId })
-    const { _name, _path } = await downloadFile(audio.url, audio.name)
-    const output = mergeAudio(`${_path}/${_name}`, `${path}/${name}`, Path.resolve(__dirname, '../tempFiles', `${name}-merge.mp3`))
+    const { _name } = await downloadFile(audio.url, audio.name)
+    const output = await mergeAudio(Path.resolve(__dirname, '../tempFiles', `${_name}.mp3`), Path.resolve(__dirname, '../tempFiles', `/${name}.mp3`), Path.resolve(__dirname, '../tempFiles', `${name}-merge.mp3`))
     // 删除本地文件
     await removeAudioFile({
       name,
@@ -30,7 +29,7 @@ const postChrous = async (req, res, next) => {
     res.json({
       code: 200,
       data: {
-        res
+        output
       }
     })
   } catch (error) {

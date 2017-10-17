@@ -61,11 +61,13 @@ const changeAudioFormat = ({ name, path = Path.resolve(__dirname, '../../tempFil
  * 合并mp3音频
  */
 const mergeAudio = (audio1, audio2, output = '') => {
+  console.log(audio1, audio2, output)
   return new Promise((resolve, reject) => {
     cp.exec(`ffmpeg -i "concat:${audio1}|${audio2}" -acodec copy ${output}`, (err) => {
       if(err) {
         return reject(err)
       }
+      console.log('合并成功', output)
       return resolve(output)
     })
   })
