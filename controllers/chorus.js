@@ -1,10 +1,9 @@
 import { saveChrous, findChrous, findOneChrous, updateChrous } from '../services/core/chorus-service'
-import { saveAudio, findOneAudio, mergeAudio, removeAudioFile, changeAudioFormat, } from '../services/core/audio-service'
+import { getMedia, saveAudio, findOneAudio, mergeAudio, removeAudioFile, changeAudioFormat, } from '../services/core/audio-service'
 import { downloadFromQiniu, downloadFile, uploadToQiniu } from '../services/qiniu-oss'
 import Path from 'path'
 
 const getAllXinMusic = async (req, res, next) => {
-	
 }
 
 const postChrous = async (req, res, next) => {
@@ -43,6 +42,5 @@ const postChrous = async (req, res, next) => {
 }
 
 export {
-  saveMedia,
   postChrous
 }
