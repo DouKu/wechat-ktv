@@ -86,6 +86,7 @@ export default {
     }
   },
   async mounted () {
+    console.log(window.location.href)
     const wechatCode = this.$route.query.code
     const saveOpenId = window.localStorage.getItem('openid')
     if (!saveOpenId && !wechatCode) {
