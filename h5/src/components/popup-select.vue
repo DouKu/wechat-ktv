@@ -2,7 +2,7 @@
   <div class="w-popup-select" v-show="show">
     <div class="w-popup-container">
       <h1>请选择歌曲</h1>
-      <div v-for="(item, index) in musics" :key="index" class="w-select-item" @click="handleChoose(item)">{{item.title}}</div>
+      <div v-for="(item, index) in musics" :key="index" class="w-select-item" @click="handleChoose(item)">{{item.name}}</div>
     </div>
   </div>
 </template>
@@ -15,7 +15,8 @@ export default {
       default () {
         return false
       }
-    }
+    },
+    musics: Array
   },
   watch: {
     value (val) {
@@ -35,13 +36,7 @@ export default {
   },
   data () {
     return {
-      show: this.value,
-      musics: [
-        { id: 1, imageUrl: '', title: '死了都要爱' },
-        { id: 2, imageUrl: '', title: '离歌' },
-        { id: 3, imageUrl: '', title: '海阔天空' },
-        { id: 4, imageUrl: '', title: '天高地厚' }
-      ]
+      show: this.value
     }
   }
 }

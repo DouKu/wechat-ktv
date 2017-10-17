@@ -9,6 +9,11 @@
 
 <script>
 export default {
+  mounted () {
+    setTimeout(() => {
+      this.$router.push('/rule')
+    }, 2000)
+  },
   methods: {
     playVideo () {
       this.$refs.video.play()

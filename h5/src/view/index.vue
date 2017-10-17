@@ -9,8 +9,7 @@
     <div class="btn" @click="stopVoice">停止播放</div>
     <div class="btn" @click="translateVoice">识别语音</div>
     <div class="btn" @click="uploadVoice">上传</div>
-    <div class="btn" @click="changeRouter('/video')">观看视频</div>
-    <div class="btn" @click="changeRouter('/person')">用户主页</div>
+    <div class="btn" @click="changeRouter('/video')">开始</div>
   </div>
 </template>
 
