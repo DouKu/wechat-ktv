@@ -1,6 +1,8 @@
 import qiniu from 'qiniu'
 import nconf from 'nconf'
 import crypto from 'crypto'
+import request from 'request'
+import Path from 'path'
 
 qiniu.conf.ACCESS_KEY = nconf.get('qiniu').ACCESS_KEY
 qiniu.conf.SECRET_KEY = nconf.get('qiniu').SECRET_KEY
@@ -102,9 +104,30 @@ const checkfile = fileName => {
 	})
 }
 
+/**
+ * 文件下载
+ */
+const downloadFile = (url, name, type = '.mp3') => {
+  return new Promise((resolve, reject) => {
+    const stream = request.get(url).on('error', (err) => {
+      reject(err)
+    }).pipe(fs.createWriteStream(Path.resolve(__dirname, '../../tempFiles', `${name}${type}`)))
+    stream.on('error', err => {
+      reject(err)
+    })
+    stream.on('finish', () => {
+      resolve({
+        name,
+        path: Path.resolve(__dirname, '../../tempFiles')
+      })
+    })
+  })
+}
+
 export {
   getUptoken,
   uploadToQiniu,
 	downloadFromQiniu,
-	checkfile
+  checkfile,
+  downloadFile
 }

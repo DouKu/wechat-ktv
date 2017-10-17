@@ -1,16 +1,17 @@
 import { saveChrous, findChrous, findOneChrous, updateChrous } from '../services/core/chorus-service'
-import { saveAudio, mergeAudio, removeAudioFile, changeAudioFormat, } from '../services/core/audio-service'
+import { saveAudio, findOneAudio, mergeAudio, removeAudioFile, changeAudioFormat, } from '../services/core/audio-service'
+import { downloadFromQiniu, downloadFile, uploadToQiniu } from '../services/qiniu-oss'
 import Path from 'path'
 
 const getAllXinMusic = async (req, res, next) => {
 	
 }
 
-const saveMedia = async (req, res, next) => {
+const postChrous = async (req, res, next) => {
   // 当前的音频
   const mediaId = req.body.mediaId
   // 之前已经录制过的音频(如果有则合并音频)
-  const preMedia = req.body.preMediaId
+  const audioId = req.body.audioId
   // TODO 使用token中间件代替
   const openid = req.body.openid
   try {
@@ -18,11 +19,9 @@ const saveMedia = async (req, res, next) => {
     const mp3 = await getMedia(mediaId)
     const path = mp3.path
     const name = mp3.name
-    if (preMedia) {
-      // 需要合并音频,先下载七牛云对应的音频，然后合并本地文件
-    }
-    // 上传本地文件到七牛云, 并更新数据库
-
+    const audio = await findOneAudio({ _id:  audioId })
+    const { _name, _path } = await downloadFile(audio.url, audio.name)
+    const output = mergeAudio(`${_path}/${_name}`, `${path}/${name}`, Path.resolve(__dirname, '../tempFiles', `${name}-merge.mp3`))
     // 删除本地文件
     await removeAudioFile({
       name,
