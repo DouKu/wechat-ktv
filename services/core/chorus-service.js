@@ -1,25 +1,25 @@
 import mongoose from 'mongoose'
 const Chorus = mongoose.model('Chorus')
 
-const saveChrous = data => {
-  return new Chrous(data).save()
+const savechorus = data => {
+  return new chorus(data).save()
 }
 
-const findOneChrous = filter => {
-  return Chrous.findOne(filter)
+const findOnechorus = filter => {
+  return chorus.findOne(filter)
 }
 
-const updateChrous = (filter, data, options = {}) => {
-  return Chrous.findOneAndUpdate(filter, data, options)
+const updatechorus = (filter, data, options = {}) => {
+  return chorus.findOneAndUpdate(filter, data, options)
 }
 
-const findChrous = filter => {
-	return Chrous.find(filter)
+const findchorus = filter => {
+	return chorus.find(filter)
 }
 
 export {
-	saveChrous,
-	findOneChrous,
-	updateChrous,
-	findChrous
+	savechorus,
+	findOnechorus,
+	updatechorus,
+	findchorus
 }
