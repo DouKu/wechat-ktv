@@ -3,6 +3,7 @@ import nconf from 'nconf'
 import crypto from 'crypto'
 import request from 'request'
 import Path from 'path'
+import fs from 'fs'
 
 qiniu.conf.ACCESS_KEY = nconf.get('qiniu').ACCESS_KEY
 qiniu.conf.SECRET_KEY = nconf.get('qiniu').SECRET_KEY

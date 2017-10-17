@@ -20,7 +20,7 @@ const postchorus = async (req, res, next) => {
     const name = mp3.name
     const audio = await findOneAudio({ _id:  audioId })
     const { _name } = await downloadFile(audio.url, audio.name)
-    const output = await mergeAudio(Path.resolve(__dirname, '../tempFiles', `${_name}.mp3`), Path.resolve(__dirname, '../tempFiles', `/${name}.mp3`), Path.resolve(__dirname, '../tempFiles', `${name}-merge.mp3`))
+    const output = await mergeAudio(Path.resolve(__dirname, '../tempFiles', `${_name}.mp3`), Path.resolve(__dirname, '../tempFiles', `${name}.mp3`), Path.resolve(__dirname, '../tempFiles', `${name}-merge.mp3`))
     // 删除本地文件
     // await removeAudioFile({
     //   name,
