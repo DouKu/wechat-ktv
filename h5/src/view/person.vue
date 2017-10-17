@@ -83,7 +83,7 @@ export default {
         success: (res) => {
           const serverId = res.serverId // 返回音频的服务器端ID
           axios.request({
-            url: `${config.baseUrl}/api/auth/chrous`,
+            url: `${config.baseUrl}/api/auth/chorus`,
             method: 'post',
             data: {
               mediaId: serverId,
