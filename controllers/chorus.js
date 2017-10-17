@@ -1,5 +1,5 @@
 import { savechorus, findchorus, findOnechorus, updatechorus } from '../services/core/chorus-service'
-import { saveAudio, findOneAudio, mergeAudio, removeAudioFile, changeAudioFormat, } from '../services/core/audio-service'
+import { saveAudio, findOneAudio, mergeAudio, removeAudioFile, changeAudioFormat, getMedia } from '../services/core/audio-service'
 import { downloadFromQiniu, downloadFile, uploadToQiniu } from '../services/qiniu-oss'
 import Path from 'path'
 
@@ -34,6 +34,7 @@ const postchorus = async (req, res, next) => {
       }
     })
   } catch (error) {
+    console.log(error)
     res.json({
       code: 400,
       msg: error.message
