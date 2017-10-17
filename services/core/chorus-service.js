@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-const Chrous = mongoose.model('Chrous')
+const Chorus = mongoose.model('Chorus')
 
 const saveChrous = data => {
   return new Chrous(data).save()

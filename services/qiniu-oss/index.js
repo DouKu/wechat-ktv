@@ -110,7 +110,6 @@ const downloadFile = (url, name, type = '.mp3') => {
 export {
   getUptoken,
   uploadToQiniu,
-	downloadFromQiniu,
   checkfile,
   downloadFile
 }
