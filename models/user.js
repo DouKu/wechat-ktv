@@ -15,8 +15,8 @@ const UserSchema = new Schema({
   privilege: Array,
   access_token: String,
   refresh_token: String,
-  createAt: { type: Date, default: Date.now }
-  
+  createAt: { type: Date, default: Date.now },
+  totalScore: Number
 })
 
 export default mongoose.model('Users', UserSchema)

@@ -1,5 +1,5 @@
 /**
- * 音频映射
+ * 信音频
  */
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema
@@ -9,4 +9,4 @@ const AudioSchema = new Schema({
   name: String
 })
 
-export default mongoose.model('Audio', UserSchema)
+export default mongoose.model('Audios', AudioSchema)

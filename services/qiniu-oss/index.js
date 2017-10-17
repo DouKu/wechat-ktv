@@ -4,7 +4,7 @@ import crypto from 'crypto'
 
 qiniu.conf.ACCESS_KEY = nconf.get('qiniu').ACCESS_KEY
 qiniu.conf.SECRET_KEY = nconf.get('qiniu').SECRET_KEY
-const mac = new qiniu.auth.digest.Mac(accessKey, secretKey)
+const mac = new qiniu.auth.digest.Mac(nconf.get('qiniu').ACCESS_KEY, nconf.get('qiniu').SECRET_KEY)
 const options = {
   scope: nconf.get('qiniu').Bucket_Name,
 }

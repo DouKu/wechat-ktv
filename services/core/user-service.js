@@ -21,5 +21,6 @@ const updateUser = (filter, data) => {
 
 export {
   saveUser,
-  findUser
+	findUser,
+	updateUser
 }
