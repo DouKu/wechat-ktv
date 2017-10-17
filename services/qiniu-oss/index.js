@@ -53,7 +53,9 @@ const uploadToQiniu = (dir, fileName) => {
       if (respErr) {
         return reject(err)
       }
-      return resolve(respBody)
+      let publicBucketDomain = 'http://os32fgzvj.bkt.clouddn.com'
+      let publicDownloadUrl = bucketManager.publicDownloadUrl(publicBucketDomain, key)
+      return resolve(publicDownloadUrl)
     })
   })
 }

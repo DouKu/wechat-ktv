@@ -19,10 +19,10 @@ config.zone = qiniu.zone.Zone_z2;
 // 上传是否使用cdn加速
 //config.useCdnDomain = true;
 
-let localFile = '/home/qill/图片/icon.jpg'
+let localFile = '/home/qill/音乐/死了都要爱.mp3'
 let formUploader = new qiniu.form_up.FormUploader(config)
 let putExtra = new qiniu.form_up.PutExtra();
-let key = 'icon.jpg'
+let key = '死了都要爱.mp3'
 
 // 文件上传
 formUploader.putFile(uploadToken, key, localFile, putExtra, (respErr, respBody, respInfo) => {

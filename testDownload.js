@@ -8,8 +8,8 @@ let config = new qiniu.conf.Config()
 
 let bucketManager = new qiniu.rs.BucketManager(mac, config)
 
-let publicBucketDomain = 'http://if-pbl.qiniudn.com'
-let key = 'icon.jpg'
+let publicBucketDomain = 'http://os32fgzvj.bkt.clouddn.com'
+let key = '死了都要爱.mp3'
 
 let publicDownloadUrl = bucketManager.publicDownloadUrl(publicBucketDomain, key)
 console.log(publicDownloadUrl)
