@@ -14,6 +14,7 @@ class RouterIndex {
     require('./wechat')(this._router, this._commonRouter, this._authRouter, this._wechatRotuer);
     require('./audio')(this._router, this._commonRouter, this._authRouter, this._wechatRotuer);
     require('./chorus')(this._router, this._commonRouter, this._authRouter, this._wechatRotuer);
+    require('./user')(this._router, this._commonRouter, this._authRouter, this._wechatRotuer);
   }
 
   /**

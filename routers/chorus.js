@@ -1,8 +1,8 @@
 import nconf from 'nconf'
-import { postChrous } from '../controllers/chorus'
+import { postchorus } from '../controllers/chorus'
 
 module.exports = (router, commonRouter, authRouter, wechatRouter) => {
-	// authRouter.get('/chrous', getAllXinMusic)
-	authRouter.post('/chrous', postChrous)
-	// authRouter.put('/chrous', updateXinMusic)
+	// authRouter.get('/chorus', getAllXinMusic)
+	authRouter.post('/chorus', postchorus)
+	// authRouter.put('/chorus', updateXinMusic)
 }

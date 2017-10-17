@@ -1,12 +1,13 @@
-import { saveChrous, findChrous, findOneChrous, updateChrous } from '../services/core/chorus-service'
-import { getMedia, saveAudio, findOneAudio, mergeAudio, removeAudioFile, changeAudioFormat, } from '../services/core/audio-service'
+import { savechorus, findchorus, findOnechorus, updatechorus } from '../services/core/chorus-service'
+import { saveAudio, findOneAudio, mergeAudio, removeAudioFile, changeAudioFormat, } from '../services/core/audio-service'
 import { downloadFromQiniu, downloadFile, uploadToQiniu } from '../services/qiniu-oss'
 import Path from 'path'
 
 const getAllXinMusic = async (req, res, next) => {
+	
 }
 
-const postChrous = async (req, res, next) => {
+const postchorus = async (req, res, next) => {
   // 当前的音频
   const mediaId = req.body.mediaId
   // 之前已经录制过的音频(如果有则合并音频)
@@ -42,5 +43,5 @@ const postChrous = async (req, res, next) => {
 }
 
 export {
-  postChrous
+  postchorus
 }

@@ -5,7 +5,14 @@ const saveUser = data => {
   return new Users(data).save()
 }
 
-const findUser = filter => {
+const findUsers = (filter, options={}) => {
+  return Users.find(filter, null, options).select({
+    access_token: 0,
+    refresh_token: 0
+  })
+}
+
+const findOneUser = filter => {
   return Users.findOne(filter).select({
     access_token: 0,
     refresh_token: 0
@@ -21,6 +28,7 @@ const updateUser = (filter, data) => {
 
 export {
   saveUser,
-	findUser,
+  findUsers,
+	findOneUser,
 	updateUser
 }
