@@ -24,7 +24,7 @@ const findAudio = filter => {
 
 const removeAudioFile = (name, path = Path.resolve(__dirname, '../../tempFiles'), type) => {
   return new Promise((resolve, reject) => {
-    if(name = '/') {
+    if(name === '/') {
       return reject(new Error('删除操作有误'))
     }
     cp.exec(`rm -f ${path}/${name}.${type}`, err => {
