@@ -43,5 +43,6 @@ const postChrous = async (req, res, next) => {
 }
 
 export {
-  saveMedia
+  saveMedia,
+  postChrous
 }

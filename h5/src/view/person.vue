@@ -11,6 +11,7 @@
     <template v-else>
       <div class="btn" @click="startRecord">重新录制</div>
     </template>
+    <div class="btn" @click="uploadVoice">上传</div>
     <div class="btn" @click="addUser">邀请好友</div>
     <div>
       活动规则
@@ -74,6 +75,24 @@ export default {
       this.currentMusic = item
     },
     async getAudios () {
+    },
+    uploadVoice () {
+      wx.uploadVoice({
+        localId: this.localId,
+        isShowProgressTips: 0,
+        success: (res) => {
+          const serverId = res.serverId // 返回音频的服务器端ID
+          axios.request({
+            url: `${config.baseUrl}/api/auth/chrous`,
+            method: 'post',
+            data: {
+              mediaId: serverId,
+              audioId: this.currentMusic._id,
+              openid: localStorage.getItem('openid')
+            }
+          })
+        }
+      })
     }
   }
 }
