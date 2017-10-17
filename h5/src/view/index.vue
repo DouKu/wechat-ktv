@@ -17,6 +17,7 @@
 import axios from 'axios'
 import config from '../config'
 import wx from 'weixin-js-sdk'
+import { getQuery } from '../utils'
 
 export default {
   data () {
@@ -86,8 +87,8 @@ export default {
     }
   },
   async mounted () {
-    console.log(window.location.href)
-    const wechatCode = this.$route.query.code
+    const query = getQuery(window.location.search)
+    const wechatCode = query.code
     const saveOpenId = window.localStorage.getItem('openid')
     if (!saveOpenId && !wechatCode) {
       this.showToAuth = true
