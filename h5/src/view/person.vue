@@ -16,6 +16,7 @@
     <audio ref="preAudio" :src="currentMusic.url" preload="true" @ended="preAudioEnd"></audio>
     <audio ref="afterAudio" :src="finalUrl" @ended="afterAudioEnd" preload="true"></audio>
     <div class="btn" @click="startPreVoice">播放原音</div>
+    <div class="btn" @click="startRecordVoice">播放录音</div>
     <div>{{finalUrl}}</div>
     <div>
       活动规则
@@ -50,7 +51,7 @@ export default {
       open: true,
       localId: '',
       currentMusic: {},
-      finalUrl: 'http://os32fgzvj.bkt.clouddn.com/merge1.mp3'
+      finalUrl: 'http://os32fgzvj.bkt.clouddn.com/8rYXE6emqQU9mLpfr-pSA_dk1peuRrqmqleZI1WdzjOfbmklRuLYkz-zzzAcU_9F.mp3'
     }
   },
   methods: {
