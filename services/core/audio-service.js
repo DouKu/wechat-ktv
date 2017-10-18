@@ -103,11 +103,10 @@ const getMedia = mediaId => {
       }
       const file = await changeMedia(result, { name: mediaId }) 
       await uploadToQiniu(Path.resolve(__dirname, '../../tempFiles'), file.name + '.amr')
-      const file2 = await changeMedia(result, { name: 'testMp3', type: '.mp3' })
-      await uploadToQiniu(Path.resolve(__dirname, '../../tempFiles'), file2.name + '.mp3')
       const formatFile = await changeAudioFormat({
         name: file.name,
       })
+      await uploadToQiniu(Path.resolve(__dirname, '../../tempFiles'), file.name + '.mp3')
       // 删除amr文件
       // await removeAudioFile(mediaId, 'amr')
       return resolve({
