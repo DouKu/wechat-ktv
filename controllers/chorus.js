@@ -14,7 +14,7 @@ const postchorus = async (req, res, next) => {
   // const audioId = req.body.audioId
   // TODO 使用token中间件代替
   const openid = req.body.openid
-  console.log('audioId', audioId)
+  // console.log('audioId', audioId)
   try {
     // 获取微信的音频
     const mp3 = await getMedia(mediaId)
