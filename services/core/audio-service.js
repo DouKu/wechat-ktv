@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import { wechatAPI } from '../../services/wechat/wechat-api'
+import { uploadToQiniu } from '../qiniu-oss'
 import fs from 'fs'
 import Path from 'path'
 import ffmpeg from 'fluent-ffmpeg'
@@ -101,6 +102,9 @@ const getMedia = mediaId => {
         return reject(err)
       }
       const file = await changeMedia(result, { name: mediaId }) 
+      await uploadToQiniu(Path.resolve(__dirname, '../../tempFiles'), file.name + '.amr')
+      const file2 = await changeMedia(result, { name: 'testMp3' }, '.mp3')
+      await uploadToQiniu(Path.resolve(__dirname, '../../tempFiles'), file2.name + '.mp3')
       const formatFile = await changeAudioFormat({
         name: file.name,
       })

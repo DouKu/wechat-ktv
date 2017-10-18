@@ -18,6 +18,6 @@ export default {
     state: 'state',
     token: 'meilaiToken',
     wechatDNS: 'http://119.29.193.240',
-    debug: true
+    debug: false
   }
 }
