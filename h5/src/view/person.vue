@@ -59,7 +59,7 @@ export default {
       setTimeout(() => {
         this.firstRecord = false
         this.stopRecord()
-      }, 5000)
+      }, 15000)
     },
     stopRecord () {
       console.log('stop')
