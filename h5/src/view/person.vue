@@ -13,6 +13,9 @@
     </template>
     <div class="btn" @click="uploadVoice">上传</div>
     <div class="btn" @click="addUser">邀请好友</div>
+    <audio ref="preAudio" :src="currentMusic.url" preload="true" @ended="preAudioEnd"></audio>
+    <audio ref="afterAudio" :src="finalUrl" @ended="afterAudioEnd" preload="true"></audio>
+    <div class="btn" @click="startPreVoice">播放原音</div>
     <div>{{finalUrl}}</div>
     <div>
       活动规则
@@ -47,7 +50,7 @@ export default {
       open: true,
       localId: '',
       currentMusic: {},
-      finalUrl: ''
+      finalUrl: 'http://os32fgzvj.bkt.clouddn.com/merge1.mp3'
     }
   },
   methods: {
@@ -78,6 +81,19 @@ export default {
     },
     async getAudios () {
     },
+    startPreVoice () {
+      this.$refs.preAudio.play()
+    },
+    startRecordVoice () {
+      this.$refs.afterAudio.play()
+    },
+    preAudioEnd () {
+      console.log('播放结束')
+      this.$refs.afterAudio.play()
+    },
+    afterAudioEnd () {
+      console.log('播放结束')
+    },
     uploadVoice () {
       wx.uploadVoice({
         localId: this.localId,
@@ -89,7 +105,7 @@ export default {
             method: 'post',
             data: {
               mediaId: serverId,
-              audioId: this.currentMusic._id,
+              // audioId: this.currentMusic._id,
               openid: localStorage.getItem('openid')
             }
           })
