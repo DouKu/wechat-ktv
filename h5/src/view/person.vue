@@ -13,6 +13,7 @@
     </template>
     <div class="btn" @click="uploadVoice">上传</div>
     <div class="btn" @click="addUser">邀请好友</div>
+    <div>{{finalUrl}}</div>
     <div>
       活动规则
     </div>
@@ -45,7 +46,8 @@ export default {
       musics: [],
       open: true,
       localId: '',
-      currentMusic: {}
+      currentMusic: {},
+      finalUrl: ''
     }
   },
   methods: {
@@ -80,9 +82,9 @@ export default {
       wx.uploadVoice({
         localId: this.localId,
         isShowProgressTips: 0,
-        success: (res) => {
+        success: async (res) => {
           const serverId = res.serverId // 返回音频的服务器端ID
-          axios.request({
+          const _res = await axios.request({
             url: `${config.baseUrl}/api/auth/chorus`,
             method: 'post',
             data: {
@@ -91,6 +93,7 @@ export default {
               openid: localStorage.getItem('openid')
             }
           })
+          this.finalUrl = _res.data.data.finalUrl
         }
       })
     }

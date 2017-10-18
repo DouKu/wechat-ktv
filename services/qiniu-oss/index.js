@@ -57,6 +57,7 @@ const uploadToQiniu = (dir, fileName) => {
       }
       let publicBucketDomain = 'http://os32fgzvj.bkt.clouddn.com'
       let publicDownloadUrl = bucketManager.publicDownloadUrl(publicBucketDomain, key)
+      console.log(fileName, ' 上传成功')
       return resolve(publicDownloadUrl)
     })
   })

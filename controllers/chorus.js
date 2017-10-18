@@ -21,8 +21,8 @@ const postchorus = async (req, res, next) => {
     const name = mp3.name
     const audio = await findOneAudio({ _id:  audioId })
     console.log(audio.fileName)
-    const { _name } = await downloadFile(audio.url, audio.fileName)
-    const output = await mergeAudio(Path.resolve(__dirname, '../tempFiles', `${_name}.mp3`), Path.resolve(__dirname, '../tempFiles', `${name}.mp3`), Path.resolve(__dirname, '../tempFiles', `${name}-merge.mp3`))
+    const output = await mergeAudio(Path.resolve(__dirname, '../scripts', `${audio.fileName}`), Path.resolve(__dirname, '../tempFiles', `${name}.mp3`), Path.resolve(__dirname, '../tempFiles', `${name}-merge.mp3`))
+    const finalUrl = await uploadToQiniu(Path.resolve(__dirname, '../tempFiles'), `${name}-merge.mp3`)
     // 删除本地文件
     // await removeAudioFile({
     //   name,
@@ -32,7 +32,7 @@ const postchorus = async (req, res, next) => {
     res.json({
       code: 200,
       data: {
-        output
+        finalUrl
       }
     })
   } catch (error) {
