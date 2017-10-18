@@ -14,12 +14,14 @@ const postchorus = async (req, res, next) => {
   const audioId = req.body.audioId
   // TODO 使用token中间件代替
   const openid = req.body.openid
+  console.log('audioId', audioId)
   try {
     // 获取微信的音频
     const mp3 = await getMedia(mediaId)
     const name = mp3.name
     const audio = await findOneAudio({ _id:  audioId })
-    const { _name } = await downloadFile(audio.url, audio.name)
+    console.log(audio.fileName)
+    const { _name } = await downloadFile(audio.url, audio.fileName)
     const output = await mergeAudio(Path.resolve(__dirname, '../tempFiles', `${_name}.mp3`), Path.resolve(__dirname, '../tempFiles', `${name}.mp3`), Path.resolve(__dirname, '../tempFiles', `${name}-merge.mp3`))
     // 删除本地文件
     // await removeAudioFile({

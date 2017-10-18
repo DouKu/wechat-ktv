@@ -1,17 +1,34 @@
 import '../nconf'
 import '../mongoose'
 import mongoose from 'mongoose'
-import Promise from 'bluebird'
+import { uploadToQiniu, checkfile } from '../services/qiniu-oss'
+import Path from 'path'
 
 const Audio = mongoose.model('Audios')
+const dir = '../tempFiles'
 
 const resource = [
-  { url: 'http://os32fgzvj.bkt.clouddn.com/%E6%BA%90%E7%9C%9F%E6%BA%90%E5%91%B3_20171012_235523.mp3', name: '死了都要爱' },
-  { url: 'http://os32fgzvj.bkt.clouddn.com/%E6%BA%90%E7%9C%9F%E6%BA%90%E5%91%B3_20171012_235523.mp3', name: '离歌' },
-  { url: 'http://os32fgzvj.bkt.clouddn.com/%E6%BA%90%E7%9C%9F%E6%BA%90%E5%91%B3_20171012_235523.mp3', name: '海阔天空' },
-  { url: 'http://os32fgzvj.bkt.clouddn.com/%E6%BA%90%E7%9C%9F%E6%BA%90%E5%91%B3_20171012_235523.mp3', name: '天高地厚' }
+  { name: '死了都要爱', fileName: 'love.mp3' },
+  { name: '离歌', fileName: 'leave.mp3' },
+  { name: '海阔天空', fileName: 'sea.mp3' },
+  { name: '天高地厚', fileName: 'sky.mp3' }
 ]
 
-const res = resource.forEach(async item => {
-  return await new Audio(item).save()
-})
+const start = async () => {
+  await Audio.remove({})
+  const res = await resource.forEach(async item => {
+    try {
+      const url = await uploadToQiniu(Path.resolve(__dirname, './files'), item.fileName)
+      console.log(url)
+      return await new Audio({
+        url,
+        fileName: item.fileName,
+        name: item.name
+      }).save()
+    } catch (error) {
+      console.log(error)    
+    }
+  })
+}
+
+start()

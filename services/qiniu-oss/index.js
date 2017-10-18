@@ -47,12 +47,13 @@ const uploadToQiniu = (dir, fileName) => {
   let localFile = dir + '/' + fileName
   let formUploader = new qiniu.form_up.FormUploader(config)
   let putExtra = new qiniu.form_up.PutExtra()
+  let bucketManager = new qiniu.rs.BucketManager(mac, config)
   let key = fileName
   // 文件上传
-  return new Pormise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     formUploader.putFile(uploadToken, key, localFile, putExtra, (respErr, respBody, respInfo) => {
       if (respErr) {
-        return reject(err)
+        return reject(respErr)
       }
       let publicBucketDomain = 'http://os32fgzvj.bkt.clouddn.com'
       let publicDownloadUrl = bucketManager.publicDownloadUrl(publicBucketDomain, key)
