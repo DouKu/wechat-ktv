@@ -90,6 +90,7 @@ export default {
     },
     preAudioEnd () {
       console.log('播放结束')
+      this.$refs.src = this.finalUrl
       this.$refs.afterAudio.play()
     },
     afterAudioEnd () {
