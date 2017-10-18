@@ -42,7 +42,7 @@ const removeAudioFile = (name, path = Path.resolve(__dirname, '../../tempFiles')
  */
 const changeAudioFormat = ({ name, path = Path.resolve(__dirname, '../../tempFiles'), output = Path.resolve(__dirname, '../../tempFiles'), type = '.amr' }) => {
   return new Promise((resolve, reject) => {
-    cp.exec(`ffmpeg -i ${path}/${name}.${type} ${output}/${name}.mp3`, err => {
+    cp.exec(`ffmpeg -i ${path}/${name}${type} ${output}/${name}.mp3`, err => {
       if(err) {
         return reject(err)
       }
