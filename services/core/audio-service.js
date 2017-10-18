@@ -42,18 +42,15 @@ const removeAudioFile = (name, path = Path.resolve(__dirname, '../../tempFiles')
  */
 const changeAudioFormat = ({ name, path = Path.resolve(__dirname, '../../tempFiles'), output = Path.resolve(__dirname, '../../tempFiles'), type = '.amr' }) => {
   return new Promise((resolve, reject) => {
-    const command = ffmpeg(`${path}/${name}${type}`)
-      .on('end', () => {
-        console.log('file has been converted succesfully');
-      })
-      .on('error', err => {
+    cp.exec(`ffmpeg -i ${path}/${name}.${type} ${output}/${name}.mp3`, err => {
+      if(err) {
         return reject(err)
+      }
+      return resolve({
+        path: output,
+        type: '.mp3',
+        name
       })
-      .save(`${output}/${name}.mp3`);
-    return resolve({
-      path: output,
-      type: '.mp3',
-      name
     })
   })
 }
@@ -104,7 +101,7 @@ const getMedia = mediaId => {
       const file = await changeMedia(result, { name: mediaId }) 
       await uploadToQiniu(Path.resolve(__dirname, '../../tempFiles'), file.name + '.amr')
       const formatFile = await changeAudioFormat({
-        name: file.name,
+        name: file.name
       })
       await uploadToQiniu(Path.resolve(__dirname, '../../tempFiles'), file.name + '.mp3')
       // 删除amr文件
