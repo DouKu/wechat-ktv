@@ -1,25 +1,28 @@
 import mongoose from 'mongoose'
 const Chorus = mongoose.model('Chorus')
 
-const savechorus = data => {
-  return new chorus(data).save()
+const saveChorus = data => {
+  return new Chorus(data).save()
 }
 
-const findOnechorus = filter => {
-  return chorus.findOne(filter)
+const findOneChorus = filter => {
+	return Chorus.findOne(filter)
+		.populate('users.user audio')
 }
 
-const updatechorus = (filter, data, options = {}) => {
-  return chorus.findOneAndUpdate(filter, data, options)
+const updateChorus = (filter, data, options = {}) => {
+  return Chorus.findOneAndUpdate(filter, data, options)
 }
 
-const findchorus = filter => {
-	return chorus.find(filter)
+const findChorus = (filter, sort) => {
+	return Chorus.find(filter)
+		.populate('users.user audio')
+		.sort(sort);
 }
 
 export {
-	savechorus,
-	findOnechorus,
-	updatechorus,
-	findchorus
+	saveChorus,
+	findOneChorus,
+	updateChorus,
+	findChorus
 }

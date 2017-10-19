@@ -5,6 +5,7 @@ import fs from 'fs'
 import Path from 'path'
 import ffmpeg from 'fluent-ffmpeg'
 import cp from 'child_process'
+import request from 'request'
 const Audio = mongoose.model('Audios')
 
 const saveAudio = data => {
@@ -104,7 +105,7 @@ const getMedia = mediaId => {
         name: file.name
       })
       await uploadToQiniu(Path.resolve(__dirname, '../../tempFiles'), file.name + '.mp3')
-      // 删除amr文件
+      // TODO 删除amr文件
       // await removeAudioFile(mediaId, 'amr')
       return resolve({
         name: formatFile.name,
@@ -119,7 +120,7 @@ export {
 	findOneAudio,
 	updateAudio,
 	findAudio,
-	getMedia,
+  getMedia,
   mergeAudio,
   changeMedia,
   removeAudioFile,

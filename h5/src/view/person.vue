@@ -35,6 +35,11 @@ import wx from 'weixin-js-sdk'
 
 export default {
   async created () {
+    const chorusId = this.$route.query.chorusId
+    if (chorusId) {
+      config.chorusId = chorusId
+    } else {
+    }
     const res = await axios.request({
       url: `${config.baseUrl}/api/auth/audio`,
       method: 'get'
@@ -107,7 +112,7 @@ export default {
             method: 'post',
             data: {
               mediaId: serverId,
-              // audioId: this.currentMusic._id,
+              audioId: this.currentMusic._id,
               openid: localStorage.getItem('openid')
             }
           })

@@ -1,49 +1,142 @@
-import { savechorus, findchorus, findOnechorus, updatechorus } from '../services/core/chorus-service'
+import { saveChorus, findChorus, findOneChorus, updateChorus } from '../services/core/chorus-service'
 import { saveAudio, findOneAudio, mergeAudio, removeAudioFile, changeAudioFormat, getMedia } from '../services/core/audio-service'
 import { downloadFromQiniu, downloadFile, uploadToQiniu } from '../services/qiniu-oss'
 import Path from 'path'
 
-const getAllXinMusic = async (req, res, next) => {
-	
+const getChorusByUser = async (req, res, next) => {
+  const user = req.user
+  console.log(user)
+  try {
+    const choruses = await findChorus({ owner: user._id }, { updateAt: 'asc' }) || []
+    res.json({
+      code: 200,
+      data: {
+        chorus: choruses[0] || {}
+      }
+    })
+  } catch (error) {
+    res.json({
+      code: 500,
+      msg: error.message
+    })    
+  }
 }
 
-const postchorus = async (req, res, next) => {
-  // 当前的音频
+const getChorus = async (req, res, next) => {
+  const chorusId = req.params.id
+  try {
+    const chorus = await findOneChorus({ _id: chorusId })
+    res.json({
+      code: 200,
+      data: {
+        chorus
+      }
+    })
+  } catch (error) {
+    res.json({
+      code: 500,
+      msg: error.message
+    })
+  }
+}
+
+const postChorus = async (req, res, next) => {
   const mediaId = req.body.mediaId
-  // 之前已经录制过的音频(如果有则合并音频)
-  // const audioId = req.body.audioId
-  // TODO 使用token中间件代替
-  const openid = req.body.openid
-  // console.log('audioId', audioId)
+  const audioId = req.body.audioId
+  const user = req.user
+  console.log(user)
   try {
     // 获取微信的音频
     const mp3 = await getMedia(mediaId)
     const name = mp3.name
-    // const audio = await findOneAudio({ _id:  audioId })
-    // console.log(audio.fileName)
-    // const output = await mergeAudio(Path.resolve(__dirname, '../scripts/files', `${audio.fileName}`), Path.resolve(__dirname, '../tempFiles', `${name}.mp3`), Path.resolve(__dirname, '../tempFiles', `${name}-merge.mp3`))
-    const finalUrl = await uploadToQiniu(Path.resolve(__dirname, '../tempFiles'), `${name}.mp3`)
-    // 删除本地文件
-    // await removeAudioFile({
-    //   name,
-    //   path: Path.resolve(__dirname, '../tempFiles'),
-    //   type: 'mp3'
-    // })
+    const recordUrl = await uploadToQiniu(Path.resolve(__dirname, '../tempFiles'), `${name}.mp3`)
+    const point = parseInt(Math.random() * 1000)
+    const chorus = await savechorus({
+      recordUrl,
+      recordFileName: name,
+      owner: user._id,
+      users: [{
+        user: user._id,
+        extendMessage: {
+          point 
+        }
+      }],
+      audio: audioId,
+      totalScore: point
+    }).save()
+    // TODO 删除本地文件
     res.json({
       code: 200,
+      msg: '录制成功',
       data: {
-        finalUrl
+        recordUrl
       }
     })
   } catch (error) {
     console.log(error)
     res.json({
-      code: 400,
+      code: 500,
+      msg: error.message
+    })
+  }
+}
+
+const patchChorus = async (req, res, next) => {
+  const user = req.user
+  console.log(user)
+  const chorusId = req.params.id
+  const audioId = req.body.audioId
+  const mediaId = req.body.mediaId
+  try {
+    const mp3 = await getMedia(mediaId)
+    const name = mp3.name
+    const mergeName = name + '-merge'
+    const chorus = findOneChorus({ _id: chorusId })
+    if(chorus.owner === user._id) {
+      return res.json({
+        code: 400,
+        msg: '已经无法继续录制'
+      })
+    }
+    await downloadFile (chorus.recordUrl, Path.resolve(__dirname, '../tempFiles'), chorus.recordFileName)
+    await mergeAudio(Path.resolve(__dirname, '../tempFiles', `${name}.mp3`), Path.resolve(__dirname, '../tempFiles', `${chorus.recordFileName}.mp3`), Path.resolve(__dirname, '../tempFiles', `${mergeName}.mp3`))
+    const recordUrl = await uploadToQiniu(Path.resolve(__dirname, '../tempFiles'), `${mergeName}.mp3`)
+    const point = parseInt(Math.random() * 1000)
+    const users = chorus.users
+    const totalScore = chorus.totalScore + point
+    users.push({
+      user: user._id,
+      extendMessage: {
+        point
+      }
+    })
+    await updateChorus({ _id: chorusId }, {
+      recordUrl,
+      recordFileName: mergeName,
+      users,
+      totalScore,
+      updateAt: Date.now()
+    })
+    // TODO 删除本地文件
+    res.json({
+      code: 200,
+      msg: '录制成功',
+      data: {
+        recordUrl
+      }
+    })
+  } catch (error) {
+    console.log(error)
+    res.json({
+      code: 500,
       msg: error.message
     })
   }
 }
 
 export {
-  postchorus
+  postChorus,
+  patchChorus,
+  getChorus,
+  getChorusByUser
 }

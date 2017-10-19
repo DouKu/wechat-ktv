@@ -93,20 +93,16 @@ const checkfile = fileName => {
 /**
  * 文件下载
  */
-const downloadFile = (url, name, type = '.mp3') => {
+const downloadFile = (url, filePath, fileName) => {
   return new Promise((resolve, reject) => {
-    const stream = request.get(url).on('error', (err) => {
-      reject(err)
-    }).pipe(fs.createWriteStream(Path.resolve(__dirname, '../../tempFiles', `${name}${type}`)))
-    stream.on('error', err => {
-      reject(err)
-    })
-    stream.on('finish', () => {
-      resolve({
-        name,
-        path: Path.resolve(__dirname, '../../tempFiles')
-      })
-    })
+    let stream = fs.createWriteStream(`${filePath}/${fileName}.mp3`);
+    request(url).pipe(stream).on('close', err => {
+      if(err) {
+        return reject(err)
+      }
+      console.log('下载完成')
+      return resolve()
+    }); 
   })
 }
 

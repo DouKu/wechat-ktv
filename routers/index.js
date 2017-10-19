@@ -1,4 +1,5 @@
 import { vertifyToken } from '../middlewares/auth-verification'
+import { initUser } from '../middlewares/init-user'
 
 class RouterIndex {
   constructor (express) {
@@ -6,6 +7,7 @@ class RouterIndex {
     this._authRouter = express.Router();
     this._commonRouter = express.Router();
     this._wechatRotuer = express.Router();
+    this._authRouter.use(initUser)
     /**
      * 路由编写
      */
