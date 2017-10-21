@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import nconf from 'nconf'
 import { getToken, getUserInfo} from '../services/wechat/wechat-sns'
-import { saveUser, findUser } from '../services/core/user-service'
+import { saveUser, findOneUser } from '../services/core/user-service'
 import { wechatAPI } from '../services/wechat/wechat-api'
 
 const getJSConfig = (req, res, next) => {
@@ -71,7 +71,7 @@ const exchangeToken = async (req, res, next) => {
     const access_token = body.access_token
     const openid = body.openid
     const userInfo = await getUserInfo(access_token, openid)
-    const user = await findUser({ openid })
+    const user = await findOneUser({ openid })
     if (!user) {
       await saveUser({
         ...userInfo,
