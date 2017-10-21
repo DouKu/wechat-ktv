@@ -63,7 +63,7 @@ const postChorus = async (req, res, next) => {
       }],
       audio: audioId,
       totalScore: point
-    }).save()
+    })
     // TODO 删除本地文件
     res.json({
       code: 200,
