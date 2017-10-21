@@ -51,7 +51,7 @@ const postChorus = async (req, res, next) => {
     const name = mp3.name
     const recordUrl = await uploadToQiniu(Path.resolve(__dirname, '../tempFiles'), `${name}.mp3`)
     const point = parseInt(Math.random() * 1000)
-    const chorus = await savechorus({
+    const chorus = await saveChorus({
       recordUrl,
       recordFileName: name,
       owner: user._id,
