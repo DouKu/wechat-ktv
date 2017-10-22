@@ -107,7 +107,7 @@ const patchChorus = async (req, res, next) => {
         point
       }
     })
-    const chorus = await updateChorus({ _id: chorusId }, {
+    await updateChorus({ _id: chorusId }, {
       recordUrl,
       recordFileName: mergeName,
       users,
@@ -119,7 +119,7 @@ const patchChorus = async (req, res, next) => {
       code: 200,
       msg: '录制成功',
       data: {
-        chorusId: chorus._id
+        chorusId: chorusId
       }
     })
   } catch (error) {
