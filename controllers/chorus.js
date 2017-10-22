@@ -81,6 +81,7 @@ const patchChorus = async (req, res, next) => {
   const user = req.user
   console.log(user)
   const chorusId = req.params.id
+  console.log('chorusId', chorusId)
   const audioId = req.body.audioId
   const mediaId = req.body.mediaId
   try {
