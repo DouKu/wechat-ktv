@@ -16,7 +16,10 @@ const UserSchema = new Schema({
   access_token: String,
   refresh_token: String,
   createAt: { type: Date, default: Date.now },
-  totalScore: Number
+  updateAt: { type: Date, default: Date.now },
+  totalScore: Number,
+  realname: String,
+  phoneNumber: String
 })
 
 export default mongoose.model('Users', UserSchema)
