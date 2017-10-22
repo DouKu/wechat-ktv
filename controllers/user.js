@@ -4,6 +4,21 @@
 import { findUsers, saveUser, updateUser } from '../services/core/user-service'
 
 /**
+ * 获取用户信息
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+const getUsers = async (req, res, next) => {
+  try {
+    const userMessages = await findUsers({})
+    return res.json({ code: 200, data: userMessages })
+  } catch (error) {
+    return res.json({ code: 400, msg: error.message })
+  }
+}
+
+/**
  * 根据微信返回信息保存用户信息 post
  * @param {} req 
  * @param {} res 
@@ -38,7 +53,7 @@ const saveUserMessage = async (req, res, next) => {
  * @param {*} res 
  * @param {*} next 
  */
-const updateUser = async (req, res, next) => {
+const updateUserMessage = async (req, res, next) => {
   try{
     const openid = req.params.openid
     await updateUser({openid: openid}, {$set: req.body})
@@ -49,6 +64,7 @@ const updateUser = async (req, res, next) => {
 }
 
 export {
+  getUsers,
   saveUserMessage,
-  updateUser
+  updateUserMessage
 }

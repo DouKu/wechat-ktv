@@ -1,6 +1,7 @@
-import { saveUserMessage, updateUser } from '../controllers/user'
+import { getUsers, saveUserMessage, updateUserMessage } from '../controllers/user'
 
 module.exports = (router, commonRouter, authRouter, wechatRouter) => {
-  authRouter.post('/createUser', saveUserMessage)
-  authRouter.put('/updateUser/:openid', updateUser)
+  authRouter.get('/getUsers', getUsers)
+  authRouter.post('/saveUserMessage', saveUserMessage)
+  authRouter.put('/updateUserMessage/:openid', updateUserMessage)
 }
