@@ -88,7 +88,7 @@ const patchChorus = async (req, res, next) => {
     const mp3 = await getMedia(mediaId)
     const name = mp3.name
     const mergeName = name + '-merge'
-    const chorus = findOneChorus({ _id: chorusId })
+    const chorus = await findOneChorus({ _id: chorusId })
     if(chorus.owner === user._id) {
       return res.json({
         code: 400,
