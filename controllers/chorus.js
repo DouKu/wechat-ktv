@@ -96,7 +96,7 @@ const patchChorus = async (req, res, next) => {
       })
     }
     await downloadFile (chorus.recordUrl, Path.resolve(__dirname, '../tempFiles'), chorus.recordFileName)
-    await mergeAudio(Path.resolve(__dirname, '../tempFiles', `${name}.mp3`), Path.resolve(__dirname, '../tempFiles', `${chorus.recordFileName}.mp3`), Path.resolve(__dirname, '../tempFiles', `${mergeName}.mp3`))
+    await mergeAudio(Path.resolve(__dirname, '../tempFiles', `${chorus.recordFileName}.mp3`), Path.resolve(__dirname, '../tempFiles', `${name}.mp3`), Path.resolve(__dirname, '../tempFiles', `${mergeName}.mp3`))
     const recordUrl = await uploadToQiniu(Path.resolve(__dirname, '../tempFiles'), `${mergeName}.mp3`)
     const point = parseInt(Math.random() * 1000)
     const users = chorus.users
@@ -107,7 +107,7 @@ const patchChorus = async (req, res, next) => {
         point
       }
     })
-    await updateChorus({ _id: chorusId }, {
+    const chorus = await updateChorus({ _id: chorusId }, {
       recordUrl,
       recordFileName: mergeName,
       users,
@@ -119,7 +119,7 @@ const patchChorus = async (req, res, next) => {
       code: 200,
       msg: '录制成功',
       data: {
-        recordUrl
+        chorusId: chorus._id
       }
     })
   } catch (error) {
