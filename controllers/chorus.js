@@ -58,7 +58,7 @@ const postChorus = async (req, res, next) => {
       users: [{
         user: user._id,
         extendMessage: {
-          point 
+          point
         }
       }],
       audio: audioId,
@@ -69,7 +69,7 @@ const postChorus = async (req, res, next) => {
       code: 200,
       msg: '录制成功',
       data: {
-        recordUrl
+        chorusId: chorus._id
       }
     })
   } catch (error) {
