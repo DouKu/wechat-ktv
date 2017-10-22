@@ -1,6 +1,22 @@
-import { findAudio, saveAudio, updateAudio } from '../services/core/audio-service'
+import { findAudio, findOneAudio, saveAudio, updateAudio } from '../services/core/audio-service'
 import { checkfile } from '../services/qiniu-oss/index'
 
+const getOneXinMusic = async (req, res, next) => {
+	try {
+		const audioId = req.params.id
+		const xinMusic = await findOneAudio({ _id: audioId })
+		res.json({
+			code: 200,
+			data: xinMusic
+		})
+	} catch (error) {
+		console.log(error)
+		res.json({
+			code: 500,
+			msg: error.message
+		})
+	}
+}
 /**
  * 获取所有信的音乐
  * @param {*} req  get 
@@ -51,6 +67,7 @@ const updateXinMusic = async (req, res, next) => {
 }
 
 export {
+	getOneXinMusic,
 	getAllXinMusic,
 	addXinMusic,
 	updateXinMusic,

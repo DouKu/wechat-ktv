@@ -10,9 +10,7 @@ const getChorusByUser = async (req, res, next) => {
     const choruses = await findChorus({ owner: user._id }, { updateAt: 'asc' }) || []
     res.json({
       code: 200,
-      data: {
-        chorus: choruses[0] || {}
-      }
+      data: choruses[0] || {}
     })
   } catch (error) {
     res.json({
@@ -28,9 +26,7 @@ const getChorus = async (req, res, next) => {
     const chorus = await findOneChorus({ _id: chorusId })
     res.json({
       code: 200,
-      data: {
-        chorus
-      }
+      data: chorus
     })
   } catch (error) {
     res.json({
