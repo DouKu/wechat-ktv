@@ -5,5 +5,5 @@ module.exports = (router, commonRouter, authRouter, wechatRouter) => {
 	authRouter.get('/chorus', getChorusByUser)
 	authRouter.get('/chorus/:id', getChorus)
 	authRouter.post('/chorus', postChorus)
-	authRouter.patch('/chorus/:id', patchChorus)
+	authRouter.put('/chorus/:id', patchChorus)
 }
