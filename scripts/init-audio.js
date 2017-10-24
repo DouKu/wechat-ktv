@@ -10,7 +10,7 @@ const dir = '../tempFiles'
 const resource = [
   { 
     name: '《死了都要爱》', 
-    fileName: 'love.mp3',
+    fileName: '1.mp3',
     url: '',
     secondes: [
       1, 4, 11, 13, 17, 21, 25, 29, 32, 36, 39
@@ -32,7 +32,7 @@ const resource = [
   },
   { 
     name: '《离歌》', 
-    fileName: 'leave.mp3', 
+    fileName: '2.mp3', 
     url: '',
     secondes: [
       1, 8, 15, 18, 21, 28, 35, 42, 45, 48, 55, 57
@@ -55,7 +55,7 @@ const resource = [
   },
   { 
     name: '《火烧的寂寞》', 
-    fileName: 'sea.mp3',
+    fileName: '3.mp3',
     url: '',
     secondes: [
       1, 4, 7, 14, 21, 24, 29, 36, 45, 51, 54, 59, 67
@@ -79,7 +79,7 @@ const resource = [
   },
   { 
     name: '《One night in 北京》', 
-    fileName: 'sky.mp3',
+    fileName: '4.mp3',
     url: '',
     secondes: [
       1, 4, 8, 10, 13, 16, 19, 22, 24, 29, 35, 41
