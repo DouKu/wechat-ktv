@@ -9,7 +9,7 @@ const ChorusSchema = new Schema({
   recordFileName: String, // 录音文件名
   owner: { type: Schema.Types.ObjectId, ref: 'Users' }, // 拥有者
   users: [
-    { 
+    {
       user: { type: Schema.Types.ObjectId, ref: 'Users' },
       extendMessage: {
         point: Number, // 各自得分
