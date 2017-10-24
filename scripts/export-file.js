@@ -14,17 +14,7 @@ const exportUser = async () => {
   users.forEach((item) => {
     console.log(item)
   })
-  UserReportsService.userReportsSearch(condition, function (err, result) {
-      if (err) {
-        res.json({code: 503, error: err});
-      } else {
-        var currentTime = moment().format('YYMMDDHHmmss');
-        var filename = currentTime + "考核汇总表.xlsx";
-        var sheet = [
-          ['序号', '部门/组', '姓名', '职位', '考核得分', '备注']
-        ];
-        // console.log(sheet);
-        
+  
         _.each(result, function (item, key) {
           var department_name;
           var user_name;
