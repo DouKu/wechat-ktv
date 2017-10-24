@@ -109,9 +109,12 @@ const start = async () => {
       const url = await uploadToQiniu(Path.resolve(__dirname, './files'), item.fileName)
       console.log(url)
       return await new Audio({
-        url,
+        url: url,
         fileName: item.fileName,
-        name: item.name
+        name: item.name,
+        secondes: item.secondes,
+        parLen: item.parLen,
+        lyric: item.lyric
       }).save()
     } catch (error) {
       console.log(error)    
