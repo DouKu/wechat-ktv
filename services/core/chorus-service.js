@@ -14,10 +14,11 @@ const updateChorus = (filter, data, options = {}) => {
   return Chorus.findOneAndUpdate(filter, data, options)
 }
 
-const findChorus = (filter, sort) => {
+const findChorus = (filter, sort, limit = 100) => {
 	return Chorus.find(filter)
 		.populate('users.user audio')
-		.sort(sort);
+		.sort(sort)
+		.limit(limit)
 }
 
 export {

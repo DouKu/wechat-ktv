@@ -20,6 +20,21 @@ const getChorusByUser = async (req, res, next) => {
   }
 }
 
+const getChoruses = async (req, res, next) => {
+  try {
+    const choruses = await findChorus({}, { totalScore: 'desc' }, 10) || []
+    res.json({
+      code: 200,
+      data: choruses
+    })
+  } catch (error) {
+    res.json({
+      code: 500,
+      msg: error.message
+    })
+  }
+}
+
 const getChorus = async (req, res, next) => {
   const chorusId = req.params.id
   try {
@@ -133,6 +148,7 @@ const patchChorus = async (req, res, next) => {
 
 export {
   postChorus,
+  getChoruses,
   patchChorus,
   getChorus,
   getChorusByUser

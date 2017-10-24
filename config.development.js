@@ -1,5 +1,5 @@
 export default {
-  port: 3000,
+  port: 3001,
   mongodb: 'mongodb://localhost/meilai',
   host: '0.0.0.0',
   secret: 'meilai',
@@ -17,7 +17,7 @@ export default {
     scope: 'snapi_userinfo',
     state: 'state',
     token: 'meilaiToken',
-    wechatDNS: 'http://119.29.193.240',
+    wechatDNS: 'http://znq.gzmylike.com',
     debug: false
   }
 }
