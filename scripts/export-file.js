@@ -2,6 +2,7 @@ import '../nconf'
 import '../mongoose'
 import mongoose from 'mongoose'
 import xlsx from 'node-xlsx'
+import fs from 'fs'
 import { findUsers } from '../services/core/user-service'
 import { findChorus } from '../services/core/chorus-service'
 
@@ -11,35 +12,19 @@ const exportUser = async () => {
   let sheet = [
     ['序号', '微信昵称', '性别', '用户填写的姓名', '电话号码']
   ]
-  users.forEach((item) => {
-    console.log(item)
+  await users.forEach((item, key) => {
+    let data = [
+      key+1,
+      item.nickname,
+      item.sex,
+      item.realname,
+      item.phoneNumber
+    ]
+    sheet.push(data);
   })
-  
-        _.each(result, function (item, key) {
-          var department_name;
-          var user_name;
-          var report_title;
-          var user_position;
-          if (item.department && item.department.name) {
-            department_name = item.department.name;
-          }
-          if (item.user && item.user.name) {
-            user_name = item.user.name;
-          }
-          if (item.user && item.user.position) {
-            user_position = item.user.position;
-          }
-          var data = [
-            key + 1,
-            department_name,
-            user_name,
-            user_position,
-            item.final_point,
-            null
-          ];
-          sheet.push(data);
-        });
-        //生成表
+  let buff = xlsx.build([{ name: "sheet1", data: sheet }])
+  fs.writeFile
+}
         var buffer = xlsx.build([{name: "sheet1", data: sheet}]);
         res.set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         res.set("Content-Disposition", "attachment;filename=" + encodeURIComponent(filename));
