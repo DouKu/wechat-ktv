@@ -8,8 +8,10 @@ const formatPoint = point => {
   point = point + parseInt(Math.random() * 10) + parseFloat(Math.random().toFixed(2))
   if (point > 100) {
     point = parseFloat((100 - parseInt(Math.random() * 10)).toFixed(2))
-  } else if (point < 60) {
-    point = point + parseFloat((Math.random() * 10).toFixed(2))
+  } else if (point < 60 && point > 50) {
+    point = point + parseFloat((Math.random() * 20).toFixed(2))
+  } else if (point < 50) {
+    point = point + parseFloat((Math.random() * 25).toFixed(2))
   }
   return parseFloat(point.toFixed(2))
 }
