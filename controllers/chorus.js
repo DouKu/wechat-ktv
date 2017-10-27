@@ -73,6 +73,14 @@ const postChorus = async (req, res, next) => {
   console.log(user)
   try {
     // 获取微信的音频
+    const choruses = await findChorus({ owner: user._id }, { updateAt: 'asc' }) || []
+    if (choruses) {
+      res.json({
+        code: 400,
+        msg: '您已经参加过录制了'
+      })
+      return
+    }
     const mp3 = await getMedia(mediaId)
     const audio = await findOneAudio({ _id: audioId })
     const name = mp3.name
