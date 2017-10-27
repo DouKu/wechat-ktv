@@ -11,7 +11,7 @@ const formatPoint = point => {
   } else if (point < 60) {
     point = point + parseFloat((Math.random() * 10).toFixed(2))
   }
-  return point
+  return parseFloat(point.toFixed(2))
 }
 
 const getChorusByUser = async (req, res, next) => {
