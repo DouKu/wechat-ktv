@@ -75,7 +75,7 @@ const postChorus = async (req, res, next) => {
     const audio = await findOneAudio({ _id: audioId })
     const name = mp3.name
     const recordUrl = await uploadToQiniu(Path.resolve(__dirname, '../tempFiles'), `${name}.mp3`)
-    let point = await makeRandomSongPoint(recordText, audio.lyric)
+    let point = await makeRandomSongPoint(recordText, audio.lyric.toString())
     point = formatPoint(point)
     const chorus = await saveChorus({
       recordUrl,
@@ -131,7 +131,7 @@ const patchChorus = async (req, res, next) => {
     await downloadFile (chorus.recordUrl, Path.resolve(__dirname, '../tempFiles'), chorus.recordFileName)
     await mergeAudio(Path.resolve(__dirname, '../tempFiles', `${chorus.recordFileName}.mp3`), Path.resolve(__dirname, '../tempFiles', `${name}.mp3`), Path.resolve(__dirname, '../tempFiles', `${mergeName}.mp3`))
     const recordUrl = await uploadToQiniu(Path.resolve(__dirname, '../tempFiles'), `${mergeName}.mp3`)
-    let point = await makeRandomSongPoint(recordText, audio.lyric)
+    let point = await makeRandomSongPoint(recordText, audio.lyric.toString())
     point = formatPoint(point)
     const users = chorus.users
     const totalScore = chorus.totalScore + point
