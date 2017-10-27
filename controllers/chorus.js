@@ -1,7 +1,18 @@
 import { saveChorus, findChorus, findOneChorus, updateChorus } from '../services/core/chorus-service'
 import { saveAudio, findOneAudio, mergeAudio, removeAudioFile, changeAudioFormat, getMedia } from '../services/core/audio-service'
 import { downloadFromQiniu, downloadFile, uploadToQiniu } from '../services/qiniu-oss'
+import { makeRandomSongPoint } from '../services/core/user-service'
 import Path from 'path'
+
+const formatPoint = point => {
+  point = point + parseInt(Math.random() * 10) + parseFloat(Math.random().toFixed(2))
+  if (point > 100) {
+    point = parseFloat((100 - parseInt(Math.random() * 10)).toFixed(2))
+  } else if (point < 60) {
+    point = point + parseFloat((Math.random() * 10).toFixed(2))
+  }
+  return point
+}
 
 const getChorusByUser = async (req, res, next) => {
   const user = req.user
@@ -53,15 +64,19 @@ const getChorus = async (req, res, next) => {
 
 const postChorus = async (req, res, next) => {
   const mediaId = req.body.mediaId
+  const recordText = req.body.recordText
+  console.log(recordText)
   const audioId = req.body.audioId
   const user = req.user
   console.log(user)
   try {
     // 获取微信的音频
     const mp3 = await getMedia(mediaId)
+    const audio = await findOneAudio({ _id: audioId })
     const name = mp3.name
     const recordUrl = await uploadToQiniu(Path.resolve(__dirname, '../tempFiles'), `${name}.mp3`)
-    const point = parseInt(Math.random() * 1000)
+    let point = await makeRandomSongPoint(recordText, audio.lyric)
+    point = formatPoint(point)
     const chorus = await saveChorus({
       recordUrl,
       recordFileName: name,
@@ -100,7 +115,9 @@ const patchChorus = async (req, res, next) => {
   console.log('chorusId', chorusId)
   const audioId = req.body.audioId
   const mediaId = req.body.mediaId
+  const recordText = req.body.recordText
   try {
+    const audio = await findOneAudio({ _id: audioId })
     const mp3 = await getMedia(mediaId)
     const name = mp3.name
     const mergeName = name + '-merge'
@@ -114,7 +131,8 @@ const patchChorus = async (req, res, next) => {
     await downloadFile (chorus.recordUrl, Path.resolve(__dirname, '../tempFiles'), chorus.recordFileName)
     await mergeAudio(Path.resolve(__dirname, '../tempFiles', `${chorus.recordFileName}.mp3`), Path.resolve(__dirname, '../tempFiles', `${name}.mp3`), Path.resolve(__dirname, '../tempFiles', `${mergeName}.mp3`))
     const recordUrl = await uploadToQiniu(Path.resolve(__dirname, '../tempFiles'), `${mergeName}.mp3`)
-    const point = parseInt(Math.random() * 1000)
+    let point = await makeRandomSongPoint(recordText, audio.lyric)
+    point = formatPoint(point)
     const users = chorus.users
     const totalScore = chorus.totalScore + point
     let status = false

@@ -38,9 +38,9 @@ const makeRandomSongPoint = (audioStr, lyric) => {
       let proportion = ((audioStr + lyric).length - differentNum) / (audioStr + lyric).length;
       // 获取低分比较容易
       if (proportion < 0.4) {
-        return resolve(proportion * 1500);
+        return resolve(proportion * 150);
       } else {
-        return resolve(proportion * 1000);
+        return resolve(proportion * 100);
       }
     } catch (err) {
       return reject(err)
