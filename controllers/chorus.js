@@ -22,7 +22,7 @@ const getChorusByUser = async (req, res, next) => {
 
 const getChoruses = async (req, res, next) => {
   try {
-    const choruses = await findChorus({}, { totalScore: 'desc' }, 10) || []
+    const choruses = await findChorus({ status: true }, { totalScore: 'desc' }, 10) || []
     res.json({
       code: 200,
       data: choruses
@@ -76,6 +76,7 @@ const postChorus = async (req, res, next) => {
       totalScore: point
     })
     // TODO 删除本地文件
+    // await removeAudioFile(name, Path.resolve(__dirname, '../tempFiles', 'mp3'))
     res.json({
       code: 200,
       msg: '录制成功',
@@ -116,20 +117,34 @@ const patchChorus = async (req, res, next) => {
     const point = parseInt(Math.random() * 1000)
     const users = chorus.users
     const totalScore = chorus.totalScore + point
+    let status = false
+    if (users.status) {
+      res.json({
+        code: 400,
+        msg: '该合唱人数已满'
+      })
+      return
+    }
     users.push({
       user: user._id,
       extendMessage: {
         point
       }
     })
+    if (users.length === 4) {
+      status = true
+    }
     await updateChorus({ _id: chorusId }, {
       recordUrl,
       recordFileName: mergeName,
+      status,
       users,
       totalScore,
       updateAt: Date.now()
     })
     // TODO 删除本地文件
+    // await removeAudioFile(name, Path.resolve(__dirname, '../tempFiles', 'mp3'))
+    // await removeAudioFile(mergeName, Path.resolve(__dirname, '../tempFiles', 'mp3'))
     res.json({
       code: 200,
       msg: '录制成功',
