@@ -78,14 +78,6 @@ const exchangeToken = async (req, res, next) => {
         refresh_token,
         access_token
       })
-    } else {
-      await updateUser({
-        _id: user._id
-      }, {
-        ...userInfo,
-        refresh_token,
-        access_token
-      })
     }
     const token = jwt.sign({
       user: JSON.parse(JSON.stringify(userInfo)),
