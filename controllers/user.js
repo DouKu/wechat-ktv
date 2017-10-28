@@ -56,10 +56,10 @@ const saveUserMessage = async (req, res, next) => {
  */
 const updateUserMessage = async (req, res, next) => {
   try{
-    const user = req.user
     const openid = req.params.openid
     console.log(openid, 'update')
-    await updateUser({openid: openid}, {$set: req.body})
+    const user = await updateUser({openid: openid}, {$set: req.body})
+    console.dir(user, 'update')
     const res = await sendWxMsg(openid, user.nickname)
     console.log(res)
     return res.json({ code: 200, msg: "update user by openid success" })
