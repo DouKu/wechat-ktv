@@ -13,7 +13,7 @@ const sendWxMsg = (openid, name) => {
         console.log('error',  err)
         return reject(err)
       }
-      resolve(res)
+      return resolve(res)
     })
   })
 }

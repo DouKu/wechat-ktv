@@ -58,11 +58,13 @@ const updateUserMessage = async (req, res, next) => {
   try{
     const user = req.user
     const openid = req.params.openid
+    console.log(openid, 'update')
     await updateUser({openid: openid}, {$set: req.body})
     const res = await sendWxMsg(openid, user.nickname)
     console.log(res)
     return res.json({ code: 200, msg: "update user by openid success" })
   } catch (error) {
+    console.log(error)
     return res.json({ code: 400, msg: error.message })
   }
 }
