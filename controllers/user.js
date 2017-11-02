@@ -2,6 +2,7 @@
  * 用户
  */
 import { findUsers, saveUser, updateUser } from '../services/core/user-service'
+import { sendWxMsg } from '../services/wechat/wechat-send'
 
 /**
  * 获取用户信息
@@ -56,9 +57,14 @@ const saveUserMessage = async (req, res, next) => {
 const updateUserMessage = async (req, res, next) => {
   try{
     const openid = req.params.openid
-    await updateUser({openid: openid}, {$set: req.body})
+    console.log(openid, 'update')
+    const user = await updateUser({openid: openid}, {$set: req.body})
+    console.dir(user, 'update')
+    const res = await sendWxMsg(openid, user.nickname)
+    console.log(res)
     return res.json({ code: 200, msg: "update user by openid success" })
   } catch (error) {
+    console.log(error)
     return res.json({ code: 400, msg: error.message })
   }
 }

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import nconf from 'nconf'
 import { getToken, getUserInfo} from '../services/wechat/wechat-sns'
-import { saveUser, findOneUser } from '../services/core/user-service'
+import { saveUser, findOneUser, updateUser } from '../services/core/user-service'
 import { wechatAPI } from '../services/wechat/wechat-api'
 
 const getJSConfig = (req, res, next) => {
