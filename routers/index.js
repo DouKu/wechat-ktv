@@ -26,7 +26,7 @@ class RouterIndex {
     return this._router;
   }
   /**
-   * 鉴权路由
+   * 鉴权路由 
    */
   authRouter () {
     return this._authRouter;
