@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-import '../mongoose'
-import '../nconf'
-import mongoose from 'mongoose'
-import xlsx from 'node-xlsx'
-import { findUsers } from '../services/core/user-service'
-import { findChorus } from '../services/core/chorus-service'
-
-const exportUser = async () => {
-  let users = await findUsers({})
-  console.log(users)
-}
-
-exportUser()
-=======
 import '../nconf'
 import '../mongoose'
 import mongoose from 'mongoose'
@@ -79,4 +64,3 @@ const exportChorus = async () => {
 
 exportUser()
 exportChorus()
->>>>>>> 51d1b1ebfbd25cf54a3dda704a343543fb04b5d2
